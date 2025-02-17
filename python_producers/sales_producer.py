@@ -1,35 +1,51 @@
-import json
+import sqlite3
 import random
 import time
 from datetime import datetime
 
-# Sample product categories
-CATEGORIES = ["Electronics", "Clothing", "Groceries", "Home & Kitchen", "Toys", "Sports"]
+# Define SQLite database path
+DB_PATH = "sales_data.sqlite"
 
-def generate_transaction():
-    """Generate a fake transaction record."""
+# Define product categories and payment methods
+CATEGORIES = ["Electronics", "Clothing", "Home & Kitchen", "Toys", "Sports"]
+PAYMENT_METHODS = ["Credit Card", "PayPal", "Cryptocurrency"]
+
+# Connect to SQLite
+conn = sqlite3.connect(DB_PATH)
+cursor = conn.cursor()
+
+# Ensure the sales table exists
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS sales_transactions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        timestamp TEXT,
+        product_category TEXT,
+        payment_method TEXT,
+        price REAL
+    )
+''')
+conn.commit()
+
+# Function to generate and insert a fake transaction
+def generate_and_store_transaction():
     transaction = {
-        "transaction_id": f"T{random.randint(1000, 9999)}",
         "timestamp": datetime.utcnow().isoformat(),
-        "customer_id": f"C{random.randint(1, 500)}",
         "product_category": random.choice(CATEGORIES),
-        "purchase_amount": round(random.uniform(5.0, 500.0), 2),
-        "payment_method": random.choice(["Credit Card", "PayPal", "Cryptocurrency"]),
-        "region": random.choice(["North America", "Europe", "Asia", "Australia"])
+        "payment_method": random.choice(PAYMENT_METHODS),
+        "price": round(random.uniform(5.0, 500.0), 2)
     }
-    return transaction
 
-def write_transactions_to_file():
-    """Continuously generate transactions and write to a JSON file."""
-    while True:
-        transaction = generate_transaction()
-        print(f"Generated Transaction: {transaction}")
-        
-        # Append transaction to a JSON file
-        with open("data/transactions.json", "a") as f:
-            f.write(json.dumps(transaction) + "\n")
+    # Insert transaction into SQLite
+    cursor.execute('''
+        INSERT INTO sales_transactions (timestamp, product_category, payment_method, price)
+        VALUES (?, ?, ?, ?)
+    ''', (transaction["timestamp"], transaction["product_category"], transaction["payment_method"], transaction["price"]))
+    
+    conn.commit()
+    print(f"🛍️ New Sale Inserted: {transaction}")
 
-        time.sleep(2)  # Generates a transaction every 2 seconds
-
+# Continuously generate transactions
 if __name__ == "__main__":
-    write_transactions_to_file()
+    while True:
+        generate_and_store_transaction()
+        time.sleep(2)  # Generate a new sale every 2 seconds

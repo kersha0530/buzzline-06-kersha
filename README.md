@@ -1,12 +1,16 @@
 # buzzline-06-kersha
 Simulated Online Sales &amp; E-commerce Streaming Data Project
 
-# 📊 Real-time Sales Analytics with Python & SQLite
+📈 **Author:** Kersha Broussard  
+📅 **Date:** February 17, 2025  
+📊 **License:** MIT License
+
+#  Real-time Sales Analytics with Python & SQLite
 
 ## 📂 Repository Overview
 This repository contains a real-time **sales transaction streaming project**, where a **Python producer** generates fake sales transactions and stores them in an **SQLite database**. A **consumer script** reads from the database and generates visual insights, including a **heatmap, bar chart, and pie chart**.
 
-### 🔧 **Key Features:**
+###  **Key Features:**
 - **Simulated E-commerce Sales Data**: Generates realistic transactions with timestamps, product categories, regions, and purchase amounts.
 - **SQLite Database Integration**: Stores transactions in a structured relational database.
 - **Real-time Data Processing**: The consumer script fetches, aggregates, and visualizes sales trends.
@@ -36,25 +40,6 @@ Ensure all necessary libraries are installed:
 pip install pandas matplotlib seaborn
 ```
 ---
-## 💻 **Project Structure**
-```
-buzzline-06-kersha/
-│── python_producers/
-│   ├── sales_producer.py  # Generates and stores sales transactions in SQLite
-│
-│── python_consumers/
-│   ├── sales_consumer.py  # Reads transactions and visualizes trends
-│
-│── data/
-│   ├── sales_data.sqlite  # SQLite database storing transaction records
-│
-│── utils/
-│   ├── db_utils.py        # Utility functions for database operations
-│
-│
-│── README.md              # This file
-```
----
 ##  **How to Run the Scripts**
 ### **1️. Start the Sales Producer**
 Run the producer to continuously generate sales transactions and insert them into SQLite:
@@ -79,7 +64,7 @@ This script:
   3. **Pie Chart** - Sales distribution per category
 
 ---
-## 📊 **Sample Visualizations**
+##  **Sample Visualizations**
 Once the consumer script runs successfully, it will display **three charts**:
 1. **Heatmap:** Sales intensity by category (colored grid)
 2. **Bar Chart:** Number of transactions per category
@@ -87,9 +72,6 @@ Once the consumer script runs successfully, it will display **three charts**:
 
 ```
 
-📈 **Author:** Kersha Broussard  
-📅 **Date:** February 17, 2025  
-📊 **License:** MIT License
 
 
 
